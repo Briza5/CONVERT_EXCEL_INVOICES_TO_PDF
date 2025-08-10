@@ -52,6 +52,28 @@ for filepath in filepaths: # Iterate over each file path in the list
         pdf.cell(w=70, h=8, txt=str(row["product_name"]), border=1) 
         pdf.cell(w=30, h=8, txt=str(row["amount_purchased"]), border=1) 
         pdf.cell(w=30, h=8, txt=str(row["price_per_unit"]), border=1) 
-        pdf.cell(w=30, h=8, txt=str(row["total_price"]), border=1, ln=1) 
+        pdf.cell(w=30, h=8, txt=str(row["total_price"]), border=1, ln=1)
+
+    """ Calculate the total price from the DataFrame and add it to the PDF."""    
+    total_sum = df["total_price"].sum() # Calculate the sum of total price from the DataFrame
+    pdf.set_font("Times", size=10) # Set the font for the PDF
+    pdf.set_text_color(80, 80, 80) # Set the text color for the PDF
+    pdf.cell(w=30, h=8, txt="", border=1) 
+    pdf.cell(w=70, h=8, txt="", border=1) 
+    pdf.cell(w=30, h=8, txt="", border=1) 
+    pdf.cell(w=30, h=8, txt="", border=1) 
+    pdf.cell(w=30, h=8, txt=str(total_sum), border=1, ln=1)
+
+
+    """ Add a cell with the total price sentence to the PDF."""
+    pdf.set_font("Times", size=10) # Set the font for the PDF
+    pdf.cell(w=30, h=8, txt=f"The total price is {total_sum}", ln=1) 
+
+    """ Add company name and logo to the PDF."""
+    pdf.set_font("Times", size=14, style="B") # Set the font for the PDF
+    pdf.cell(w=30, h=8, txt=f"PythonHow")
+    pdf.image("images/pythonhow.png", w=10) # Add the company logo to the PDF
+
+    
    
     pdf.output(f"pdfs/{filename}.pdf") # Save the PDF to the specified directory with the same name as the Excel file
